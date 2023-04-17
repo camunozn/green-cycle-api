@@ -74,25 +74,19 @@ exports.createOrder = async (req, res, next) => {
 };
 
 exports.updateOrder = async (req, res, next) => {
-  
-    const role = req.user.role_id;
-    const {
-      volumen,
-      weight,
-      observations,
-      material_id,
-    } = req.body;
-    let { image } = req.files || {}
+  const role = req.user.role_id;
+  const { volumen, weight, observations, material_id } = req.body;
+  let { image } = req.files || {};
 
-    try {
-      const imageUpload = await OrderServices.uploadImageOrder(image.tempFilePath)
+  try {
+    const imageUpload = await OrderServices.uploadImageOrder(image.tempFilePath);
 
-      const { secure_url: url, public_id: idImg } = imageUpload;
+    const { secure_url: url, public_id: idImg } = imageUpload;
 
-      image = url;
-      const image_id = idImg;
+    image = url;
+    const image_id = idImg;
 
-      await fs.rmdir('./tmp', { recursive: true })
+    await fs.rmdir('./tmp', { recursive: true });
 
     // Verificar que el rol del usuario sea reciclador
     // Verificar que el usuario que borra la orden sea el que la creó
@@ -103,8 +97,8 @@ exports.updateOrder = async (req, res, next) => {
         weight,
         observations,
         material_id,
-        image_id, 
-        image
+        image_id,
+        image,
       });
       res.status(201).json({
         status: 'success',
@@ -119,10 +113,10 @@ exports.updateOrder = async (req, res, next) => {
     }
   } catch (error) {
     if (image !== undefined && typeof image === 'string') {
-    await OrderServices.deleteImageOrder(image_id)
+      await OrderServices.deleteImageOrder(image_id);
     }
     console.error(error);
-    res.status(500).json(error)
+    res.status(500).json(error);
   }
 };
 
@@ -155,21 +149,21 @@ exports.deleteOrder = async (req, res, next) => {
 
 exports.getAllAvailableOrders = async (req, res, next) => {
   try {
-    const role = req.user.role_id;
+    // const role = req.user.role_id;
 
     // Verificar que el rol del usuario sea recolector
-    if (role === 2) {
-      const availableOrders = await OrderServices.getAvailableOrders();
-      res.status(200).json({
-        status: 'success',
-        orders: availableOrders,
-      });
-    } else {
-      res.status(401).json({
-        errorName: 'Unauthorized',
-        errorMessage: 'Access denied for this user role',
-      });
-    }
+    // if (role === 2) {
+    const availableOrders = await OrderServices.getAvailableOrders();
+    res.status(200).json({
+      status: 'success',
+      orders: availableOrders,
+    });
+    // } else {
+    //   res.status(401).json({
+    //     errorName: 'Unauthorized',
+    //     errorMessage: 'Access denied for this user role',
+    //   });
+    // }
   } catch (error) {
     console.error(error);
   }
