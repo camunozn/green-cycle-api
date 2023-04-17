@@ -6,6 +6,7 @@ const initModels = require('./models/initModels');
 const userRoutes = require('./routes/user.routes');
 const orderRoutes = require('./routes/order.routes');
 const contactRoutes = require('./routes/contact.routes');
+const errorHandlerRouter = require('./routes/errorHandler.routes');
 
 initModels();
 
