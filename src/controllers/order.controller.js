@@ -45,7 +45,7 @@ exports.getAllOrdersHistory = async (req, res, next) => {
       });
     }
   } catch (error) {
-    console.error(error);
+    next(error);
   }
 };
 
@@ -69,7 +69,7 @@ exports.createOrder = async (req, res, next) => {
       });
     }
   } catch (error) {
-    console.error(error);
+    next(error);
   }
 };
 
@@ -115,8 +115,7 @@ exports.updateOrder = async (req, res, next) => {
     if (image !== undefined && typeof image === 'string') {
       await OrderServices.deleteImageOrder(image_id);
     }
-    console.error(error);
-    res.status(500).json(error);
+    next(error);
   }
 };
 
@@ -140,7 +139,7 @@ exports.deleteOrder = async (req, res, next) => {
       });
     }
   } catch (error) {
-    console.error(error);
+    next(error);
   }
 };
 
@@ -165,7 +164,7 @@ exports.getAllAvailableOrders = async (req, res, next) => {
     //   });
     // }
   } catch (error) {
-    console.error(error);
+    next(error);
   }
 };
 
@@ -188,7 +187,7 @@ exports.getAllAttendingOrders = async (req, res, next) => {
       });
     }
   } catch (error) {
-    console.error(error);
+    next(error);
   }
 };
 
@@ -211,7 +210,7 @@ exports.getAllAttendedOrders = async (req, res, next) => {
       });
     }
   } catch (error) {
-    console.error(error);
+    next(error);
   }
 };
 
@@ -240,7 +239,7 @@ exports.attendOrder = async (req, res, next) => {
       });
     }
   } catch (error) {
-    console.error(error);
+    next(error);
   }
 };
 
@@ -270,7 +269,7 @@ exports.dismissOrder = async (req, res, next) => {
       });
     }
   } catch (error) {
-    console.error(error);
+    next(error);
   }
 };
 
@@ -298,6 +297,6 @@ exports.closeOrder = async (req, res, next) => {
       });
     }
   } catch (error) {
-    console.error(error);
+    next(error);
   }
 };

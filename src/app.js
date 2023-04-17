@@ -31,6 +31,8 @@ app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/orders', orderRoutes);
 app.use('/api/v1/contact', contactRoutes);
 
+errorHandlerRouter(app);
+
 app.listen(PORT, () => {
   console.log(`App running on port: ${PORT}`);
 });

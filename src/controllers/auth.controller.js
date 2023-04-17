@@ -35,7 +35,7 @@ exports.signUp = async (req, res, next) => {
       },
     });
   } catch (error) {
-    console.error(error);
+    next(error);
   }
 };
 
@@ -80,7 +80,7 @@ exports.login = async (req, res, next) => {
       },
     });
   } catch (error) {
-    console.error(error);
+    next(error);
   }
 };
 
@@ -105,6 +105,6 @@ exports.protect = (req, res, next) => {
     req.user = decoded;
     next();
   } catch (error) {
-    console.error(error);
+    next(error);
   }
 };
