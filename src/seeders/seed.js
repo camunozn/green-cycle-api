@@ -128,20 +128,20 @@ const assignedOrders = [
   { order_id: 8, collector_id: 5 },
 ];
 
-db.sync({ force: true }).then(async () => {
-  const roleResult = await Roles.bulkCreate(roles);
-  if (roleResult) console.log('Roles creados correctamente');
-  const matResult = await Materials.bulkCreate(materials);
-  if (matResult) console.log('Materiales creados correctamente');
-  users.forEach(user => {
-    Users.create(user);
-  });
-  setTimeout(async () => {
-    const ordersResult = await Orders.bulkCreate(orders);
-    if (ordersResult) console.log('Órdenes creadas correctamente');
-    setTimeout(async () => {
-      const assignedResult = await OrderUsers.bulkCreate(assignedOrders);
-      if (assignedResult) console.log('Órdenes asignadas correctamente');
-    }, 1000);
-  }, 1000);
+db.sync().then(async () => {
+  // const roleResult = await Roles.bulkCreate(roles);
+  // if (roleResult) console.log('Roles creados correctamente');
+  // const matResult = await Materials.bulkCreate(materials);
+  // if (matResult) console.log('Materiales creados correctamente');
+  // users.forEach(user => {
+  //   Users.create(user);
+  // });
+  const ordersResult = await Orders.bulkCreate(orders);
+  if (ordersResult) console.log('Órdenes creadas correctamente');
+  // const assignedResult = await OrderUsers.bulkCreate(assignedOrders);
+  // if (assignedResult) console.log('Órdenes asignadas correctamente');
+  // setTimeout(async () => {
+  //   setTimeout(async () => {
+  //   }, 1000);
+  // }, 1000);
 });
