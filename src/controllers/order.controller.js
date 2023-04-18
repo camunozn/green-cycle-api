@@ -1,5 +1,18 @@
 const OrderServices = require('../services/order.services');
 const fs = require('fs/promises');
+
+exports.getFeedOrders = async (req, res, next) => {
+  try {
+    const availableOrders = await OrderServices.getAvailableOrders();
+    res.status(200).json({
+      status: 'success',
+      orders: availableOrders,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 /////////////////////////////////////////////////////
 // Recycler
 
