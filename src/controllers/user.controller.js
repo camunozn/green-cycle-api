@@ -45,6 +45,7 @@ exports.updateUser = async (req, res, next) => {
 
     await fs.rmdir('./tmp', { recursive: true });
 
+    //FIX extract only fields that can be updated from req.body
     const updatedUser = await UserServices.updateOne(id, {
       firstname,
       lastname,

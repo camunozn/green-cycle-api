@@ -22,7 +22,7 @@ exports.getAllActiveOrders = async (req, res, next) => {
       });
     }
   } catch (error) {
-    console.error(error);
+    next(error);
   }
 };
 
@@ -148,21 +148,21 @@ exports.deleteOrder = async (req, res, next) => {
 
 exports.getAllAvailableOrders = async (req, res, next) => {
   try {
-    // const role = req.user.role_id;
+    const role = req.user.role_id;
 
     // Verificar que el rol del usuario sea recolector
-    // if (role === 2) {
-    const availableOrders = await OrderServices.getAvailableOrders();
-    res.status(200).json({
-      status: 'success',
-      orders: availableOrders,
-    });
-    // } else {
-    //   res.status(401).json({
-    //     errorName: 'Unauthorized',
-    //     errorMessage: 'Access denied for this user role',
-    //   });
-    // }
+    if (role === 2) {
+      const availableOrders = await OrderServices.getAvailableOrders();
+      res.status(200).json({
+        status: 'success',
+        orders: availableOrders,
+      });
+    } else {
+      res.status(401).json({
+        errorName: 'Unauthorized',
+        errorMessage: 'Access denied for this user role',
+      });
+    }
   } catch (error) {
     next(error);
   }

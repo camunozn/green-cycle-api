@@ -18,7 +18,6 @@ const Orders = db.define(
     },
     image_id: {
       type: DataTypes.STRING,
-      allowNull: true,
     },
     image: {
       type: DataTypes.STRING,

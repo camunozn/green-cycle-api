@@ -3,20 +3,21 @@ const validateResult = require('../utils/validate');
 
 exports.updateUser = [
   param('id').isInt().withMessage('El id debe ser un numero entero'),
-  check('username', 'Error con el campo username')
+  check('firstname', 'Error en el campo firstname')
     .exists()
-    .withMessage("Debe existir la propiedad 'username'")
+    .withMessage("Debe existir la propiedad 'firstname'")
     .notEmpty()
-    .withMessage('El username no debe estar vacio')
+    .withMessage('El campo no debe estar vacio')
     .isString()
-    .withMessage('El username debe ser un string')
-    .isLength({ min: 6, max: 30 })
-    .withMessage('El username debe tener entre 6 y 30 caracteres'),
-  check('avatar', 'Error con el campo avatar')
+    .withMessage('El campo debe ser un string'),
+
+  check('lastname', 'Error en el campo lastname')
+    .exists()
+    .withMessage("Debe existir la propiedad 'lastname'")
     .notEmpty()
-    .withMessage('El avatar no debe estar vacio')
-    .isURL()
-    .withMessage('el avatar debe ser una URL valida'),
+    .withMessage('El campo no debe estar vacio')
+    .isInt()
+    .withMessage('El campo debe ser un entero'),
   (req, res, next) => {
     validateResult(req, res, next);
   },

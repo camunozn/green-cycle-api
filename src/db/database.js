@@ -1,7 +1,8 @@
-const { Sequelize } = require('sequelize');
-const dotenv = require('dotenv');
+const { Sequelize } = require("sequelize");
+const dotenv = require("dotenv");
+
 /* Loading the environment variables from the config.env file. */
-dotenv.config({ path: './config.env' });
+dotenv.config({ path: "./config.env" });
 
 const db = new Sequelize({
   database: process.env.DATABASE,
@@ -9,7 +10,7 @@ const db = new Sequelize({
   port: process.env.DB_PORT,
   username: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
-  dialect: 'postgres',
+  dialect: "postgres",
   logging: false,
 });
 

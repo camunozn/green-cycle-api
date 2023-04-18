@@ -1,17 +1,17 @@
 const { Router } = require('express');
 const orderController = require('../controllers/order.controller');
 const authController = require('../controllers/auth.controller');
-const { or } = require('sequelize');
+const orderValidator = require('../validators/order.validator');
 const fileUpload = require('express-fileupload')({
   useTempFiles: true,
-  tempFileDir: './tmp'
-})
+  tempFileDir: './tmp',
+});
 
 const router = Router();
 // Routes
 //////////////////////////////////////////////////////////////////////////////////////
 // Open Orders
-// router.get('/feed', orderController.getAllOpenOrders);
+router.get('/feed', orderController.getAllAvailableOrders);
 
 //////////////////////////////////////////////////////////////////////////////////////
 // Recycler
@@ -20,25 +20,56 @@ router.get('/active', authController.protect, orderController.getAllActiveOrders
 // View closed orders (history)
 router.get('/history', authController.protect, orderController.getAllOrdersHistory);
 // Create order
-router.post('/', authController.protect, orderController.createOrder);
+router.post(
+  '/',
+  orderValidator.createOrderRecycler,
+  authController.protect,
+  orderController.createOrder
+);
 // Update order
-router.put('/:id', authController.protect, fileUpload, orderController.updateOrder);
+router.put(
+  '/:id',
+  orderValidator.updateOrderRecycler,
+  authController.protect,
+  fileUpload,
+  orderController.updateOrder
+);
 // Delete order
-router.delete('/:id', authController.protect, orderController.deleteOrder);
+router.delete(
+  '/:id',
+  orderValidator.deleteOrderRecycler,
+  authController.protect,
+  orderController.deleteOrder
+);
 
 //////////////////////////////////////////////////////////////////////////////////////
 // Collector
 // View available orders (pending)
-router.get('/available', orderController.getAllAvailableOrders);
+router.get('/available', authController.protect, orderController.getAllAvailableOrders);
 // View attending orders (assigned)
 router.get('/attending', authController.protect, orderController.getAllAttendingOrders);
 // View attended orders (closed)
 router.get('/attended', authController.protect, orderController.getAllAttendedOrders);
 // Attend an order
-router.put('/:id/attend', authController.protect, orderController.attendOrder);
+router.put(
+  '/:id/attend',
+  orderValidator.updateOrderCollector,
+  authController.protect,
+  orderController.attendOrder
+);
 // Dismiss an order
-router.put('/:id/dismiss', authController.protect, orderController.dismissOrder);
+router.put(
+  '/:id/dismiss',
+  orderValidator.updateOrderCollector,
+  authController.protect,
+  orderController.dismissOrder
+);
 // Close an order
-router.put('/:id/close', authController.protect, orderController.closeOrder);
+router.put(
+  '/:id/close',
+  orderValidator.updateOrderCollector,
+  authController.protect,
+  orderController.closeOrder
+);
 
 module.exports = router;
