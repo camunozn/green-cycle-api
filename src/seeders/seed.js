@@ -136,12 +136,12 @@ db.sync({ force: true }).then(async () => {
   users.forEach(user => {
     Users.create(user);
   });
-  const ordersResult = await Orders.bulkCreate(orders);
-  if (ordersResult) console.log('Órdenes creadas correctamente');
-  const assignedResult = await OrderUsers.bulkCreate(assignedOrders);
-  if (assignedResult) console.log('Órdenes asignadas correctamente');
-  // setTimeout(async () => {
-  //   setTimeout(async () => {
-  //   }, 400);
-  // }, 400);
+  setTimeout(async () => {
+    const ordersResult = await Orders.bulkCreate(orders);
+    if (ordersResult) console.log('Órdenes creadas correctamente');
+    setTimeout(async () => {
+      const assignedResult = await OrderUsers.bulkCreate(assignedOrders);
+      if (assignedResult) console.log('Órdenes asignadas correctamente');
+    }, 1000);
+  }, 1000);
 });
