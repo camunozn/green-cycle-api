@@ -142,6 +142,6 @@ db.sync({ force: true }).then(async () => {
     setTimeout(async () => {
       const assignedResult = await OrderUsers.bulkCreate(assignedOrders);
       if (assignedResult) console.log('Órdenes asignadas correctamente');
-    }, 400);
-  }, 400);
+    }, 5000);
+  }, 5000);
 });

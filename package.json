@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node ./src/app.js",
     "dev": "nodemon ./src/app.js",
-    "seed": "node ./src/seeders/seed.js",
+    "seed": "node ./src/seeders/seed.js && node ./src/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Grupo C10-54-M NoCountry",
