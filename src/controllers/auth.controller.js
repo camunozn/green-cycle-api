@@ -16,7 +16,6 @@ exports.signUp = async (req, res, next) => {
       role_id: req.body.role_id,
     };
     const user = await UserServices.createOne(newUser);
-    // incluir envío de mail de confirmación
 
     const { id, firstname, lastname, email, role_id } = user;
     const token = AuthServices.signToken({
@@ -26,6 +25,15 @@ exports.signUp = async (req, res, next) => {
       email,
       role_id,
     });
+
+    // Send Token
+    const cookieOptions = {
+      expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000),
+      httpOnly: true,
+      secure: req.secure || req.headers['x-forwarded-proto' === 'https'],
+    };
+    // Send cookie
+    res.cookie('jwt', token, cookieOptions);
 
     res.status(201).json({
       status: 'success',
@@ -67,6 +75,15 @@ exports.login = async (req, res, next) => {
       email,
       role_id,
     });
+
+    // Send Token
+    const cookieOptions = {
+      expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000),
+      httpOnly: true,
+      secure: req.secure || req.headers['x-forwarded-proto' === 'https'],
+    };
+    // Send cookie
+    res.cookie('jwt', token, cookieOptions);
 
     res.json({
       status: 'success',
